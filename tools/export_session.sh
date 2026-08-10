@@ -2,8 +2,17 @@
 
 set -euo pipefail
 
+info()  { printf '[ .. ] %s\n' "$*"; }
+ok()    { printf '[ OK ] %s\n' "$*"; }
+error() { printf '[ X ] %s\n' "$*" >&2; }
+
+echo '============================================================'
+echo '  导出会话'
+echo '============================================================'
+echo
+
 if [ "$#" -lt 1 ]; then
-    echo "至少选择一个会话进行导出(需确保已通过/rename命名)"
+    error '至少选择一个会话进行导出（需先通过 /rename 命名）'
     echo "用法: $0 <会话1> <会话2> ..."
     exit 1
 fi
@@ -12,17 +21,17 @@ codex_home="$HOME/.codex"
 codex_session_index="$codex_home/session_index.jsonl"
 
 if [ ! -f "$codex_session_index" ]; then
-    echo "无已命名的会话，请在会话中执行/rename来命名(若有多个会话，勿重名)"
+    error '无已命名的会话，请先通过 /rename 命名（多个会话请勿重名）'
     exit 1
 fi
 
 if ! command -v jq >/dev/null 2>&1; then
-    echo "[ X ] 未找到 jq，无法检查会话索引"
+    error '未找到 jq，无法检查会话索引'
     exit 1
 fi
 
 # 导出会话
-archive_name=__ARCHIVE_NAME__
+archive_name=codex_sessions
 export_dir="/tmp/$archive_name"
 mkdir -p "$export_dir"
 
@@ -57,15 +66,16 @@ for session in "$@"; do
 
     case "$match_count" in
         0)
-            echo "[ X ] 未找到名为 $session 的会话"
+            error "未找到名为 ${session} 的会话"
             exit 1
             ;;
         1)
+            info "正在导出会话: ${session}"
             process "$session_index"
-            echo "会话 $session 已导出"
+            ok "会话 ${session} 已导出"
             ;;
         *)
-            echo "[ X ] 发现 $match_count 个同名会话：$session 。无法确定目标，请使用不同名称"
+            error "发现 ${match_count} 个同名会话：${session}，无法确定目标，请使用不同名称"
             exit 1
             ;;
     esac
@@ -73,6 +83,7 @@ done
 
 tar -czf "$export_dir.tar.gz" -C /tmp "$archive_name"
 rm -rf "$export_dir"
-echo "====================================="
-echo "导出完成：$export_dir.tar.gz"
-
+echo
+echo '============================================================'
+ok "导出完成：${export_dir}.tar.gz"
+echo '============================================================'
