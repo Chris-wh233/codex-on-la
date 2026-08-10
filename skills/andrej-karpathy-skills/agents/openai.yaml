@@ -1,0 +1,4 @@
+interface:
+  display_name: "Andrej Karpathy Skills"
+  short_description: "Apply Karpathy's coding guidelines"
+  default_prompt: "Use $andrej-karpathy-skills when writing, reviewing, or refactoring code."
