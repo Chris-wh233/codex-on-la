@@ -1,7 +1,5 @@
-#!/bin/bash
-
-# 目前的 codex-cli 基于 glibc2.38 构建，暂不支持旧世界和新世界的 alpine
 # codex 家目录使用默认的 ~/.codex，勿自定义 CODEX_HOME
+#!/bin/bash
 
 set -euo pipefail
 

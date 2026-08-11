@@ -31,9 +31,9 @@ if ! command -v jq >/dev/null 2>&1; then
 fi
 
 # 导出会话
-archive_name=codex_sessions
+archive_name=__ARCHIVE_NAME__
 export_dir="/tmp/$archive_name"
-mkdir -p "$export_dir"
+rm -rf "$export_dir" && mkdir -p "$export_dir"
 
 process()
 {
