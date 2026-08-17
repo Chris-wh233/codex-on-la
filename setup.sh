@@ -69,7 +69,7 @@ while :; do
             ;;
         n|N)
             info '开始下载 codex ...'
-            codex_ver=0.144.6
+            codex_ver=0.145.0
             codex_url="https://github.com/Chris-wh233/codex-on-la/releases/download/${codex_ver}/codex-${codex_ver}"
             curl -fL -o "${codex_bin_path}" "${codex_url}"
             ok "codex 已下载至: ${codex_bin_path}"
