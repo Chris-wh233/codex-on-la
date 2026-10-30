@@ -26,6 +26,10 @@ patch_rusty_v8()
 patch_codex()
 {
     # 更换 v8 和 seccompiler 来源
+    sed -i '/^[[:space:]]*\[patch\.crates-io\][[:space:]]*$/,/^[[:space:]]*\[/ {
+        /^[[:space:]]*v8[[:space:]]*=/d
+    }' "${ROOT_DIR}/codex/codex-rs/Cargo.toml"
+
     sed -i '/\[patch.crates-io\]/a\
 v8 = { path = "'"${ROOT_DIR}/rusty_v8"'" }\
 seccompiler = { git = "'"${SECCOMPILER_URL}"'", branch = "v'"${SECCOMPILER_VER}"'" }' "${ROOT_DIR}/codex/codex-rs/Cargo.toml"
