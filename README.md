@@ -1,12 +1,12 @@
-### (LoongArch64) 安装 codex 并接入 deepseek
-执行 set.sh
+# Codex for LoongArch64 ABI 2.0
 
-!!! 建议在容器内部署，避免模型破坏生产环境。会话记录可以通过 tools/ 中的脚本进行迁移 !!!
+在 LoongArch64 宿主机上，通过 Docker 容器构建并打包 Codex CLI。
 
-skills/ 内放置自定义 skill 可一并安装
+## 使用
 
-安装完成后，执行：
-1. codex  -->  启动codex。默认最高权限
-2. import_session  -->  导入会话记录
-3. export_session  -->  导出指定会话
+```bash
+./scripts/run_build.sh 0.163.0
+```
+
+版本参数使用 `0.163.0`，脚本内部统一转换为上游 tag `rust-v0.163.0`。
 
